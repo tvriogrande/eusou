@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio TV Rio Grande</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .impact-phrase {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.6); }
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .brand-logo {
+            height: 60px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .brand-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+        }
+
+        .result-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .result-name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+        }
+
+        .result-phone {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-draw {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+        }
+
+        .btn-draw:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-reset {
+            background: linear-gradient(to right, #2193b0, #6dd5ed);
+            color: white;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .counter {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #ffcc00;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
+            margin: 20px 0;
+            animation: countPulse 0.5s infinite;
+        }
+
+        @keyframes countPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .instructions {
+            margin-top: 30px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+
+        .file-input-container {
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .file-label {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .file-label:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .file-name {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .impact-phrase {
+                font-size: 2rem;
+            }
+            
+            .brand-text {
+                font-size: 1.5rem;
+            }
+            
+            .result-name {
+                font-size: 1.8rem;
+            }
+            
+            .result-phone {
+                font-size: 1.4rem;
+            }
+            
+            .counter {
+                font-size: 3.5rem;
+            }
+            
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="./logo.png" alt="Logo TV Rio Grande" class="logo">
+        </div>
+        
+        <h1 class="impact-phrase">Sorteio na TV RIO GRANDE</h1>
+        
+        <div class="brand-container">
+            <img src="./eusou.png" alt="Eu Sou" class="brand-logo">
+            <div class="brand-text">#EuSou TvRioGrande</div>
+        </div>
+        
+        <div class="file-input-container">
+            <label for="vcf-file" class="file-label">Selecionar arquivo VCF</label>
+            <input type="file" id="vcf-file" accept=".vcf">
+            <div class="file-name" id="file-name">Nenhum arquivo selecionado</div>
+        </div>
+        
+        <div class="result-container" id="result-container">
+            <div id="result-placeholder">O contato sorteado aparecerá aqui</div>
+            <div class="result-name" id="result-name" style="display: none;"></div>
+            <div class="result-phone" id="result-phone" style="display: none;"></div>
+        </div>
+        
+        <div class="counter" id="counter" style="display: none;">3</div>
+        
+        <div class="button-container">
+            <button class="btn btn-draw" id="draw-btn">Sortear Contato</button>
+            <button class="btn btn-reset" id="reset-btn">Reiniciar Sorteio</button>
+        </div>
+        
+        <div class="instructions">
+            <p>Carregue um arquivo VCF e clique em "Sortear Contato" para realizar o sorteio.</p>
+            <p>O contato selecionado será exibido com nome e telefone.</p>
+        </div>
+    </div>
+    
+    <footer>
+        TV Rio Grande &copy; 2023 - Todos os direitos reservados
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const vcfFileInput = document.getElementById('vcf-file');
+            const fileNameDisplay = document.getElementById('file-name');
+            const drawBtn = document.getElementById('draw-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const resultContainer = document.getElementById('result-container');
+            const resultPlaceholder = document.getElementById('result-placeholder');
+            const resultName = document.getElementById('result-name');
+            const resultPhone = document.getElementById('result-phone');
+            const counter = document.getElementById('counter');
+            
+            let contacts = [];
+            let selectedContact = null;
+            
+            // Atualizar nome do arquivo selecionado
+            vcfFileInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    fileNameDisplay.textContent = e.target.files[0].name;
+                    parseVCF(e.target.files[0]);
+                } else {
+                    fileNameDisplay.textContent = 'Nenhum arquivo selecionado';
+                }
+            });
+            
+            // Função para analisar o arquivo VCF
+            function parseVCF(file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    contacts = extractContactsFromVCF(content);
+                    
+                    if (contacts.length > 0) {
+                        drawBtn.disabled = false;
+                        alert(`Arquivo carregado com sucesso! ${contacts.length} contatos encontrados.`);
+                    } else {
+                        drawBtn.disabled = true;
+                        alert('Nenhum contato encontrado no arquivo VCF.');
+                    }
+                };
+                
+                reader.readAsText(file);
+            }
+            
+            // Extrair contatos do conteúdo VCF
+            function extractContactsFromVCF(vcfContent) {
+                const contacts = [];
+                const lines = vcfContent.split('\n');
+                let currentContact = null;
+                
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    
+                    if (line.startsWith('BEGIN:VCARD')) {
+                        currentContact = {};
+                    } else if (line.startsWith('END:VCARD')) {
+                        if (currentContact && (currentContact.name || currentContact.phone)) {
+                            contacts.push(currentContact);
+                        }
+                        currentContact = null;
+                    } else if (line.startsWith('FN:') && currentContact) {
+                        currentContact.name = line.substring(3);
+                    } else if ((line.startsWith('TEL;') || line.startsWith('TEL:')) && currentContact) {
+                        const phoneLine = line.split(':');
+                        if (phoneLine.length > 1) {
+                            currentContact.phone = phoneLine[1].replace(/\D/g, '');
+                        }
+                    }
+                }
+                
+                return contacts;
+            }
+            
+            // Realizar o sorteio
+            drawBtn.addEventListener('click', function() {
+                if (contacts.length === 0) {
+                    alert('Por favor, carregue um arquivo VCF válido primeiro.');
+                    return;
+                }
+                
+                // Desabilitar botão durante o sorteio
+                drawBtn.disabled = true;
+                
+                // Mostrar contagem regressiva
+                resultPlaceholder.style.display = 'none';
+                resultName.style.display = 'none';
+                resultPhone.style.display = 'none';
+                counter.style.display = 'block';
+                
+                let count = 3;
+                counter.textContent = count;
+                
+                const countdown = setInterval(() => {
+                    count--;
+                    counter.textContent = count;
+                    
+                    if (count <= 0) {
+                        clearInterval(countdown);
+                        counter.style.display = 'none';
+                        
+                        // Selecionar contato aleatório
+                        const randomIndex = Math.floor(Math.random() * contacts.length);
+                        selectedContact = contacts[randomIndex];
+                        
+                        // Exibir resultado
+                        resultName.textContent = selectedContact.name || 'Nome não disponível';
+                        resultPhone.textContent = formatPhone(selectedContact.phone) || 'Telefone não disponível';
+                        
+                        resultName.style.display = 'block';
+                        resultPhone.style.display = 'block';
+                        
+                        // Habilitar botão novamente
+                        drawBtn.disabled = false;
+                    }
+                }, 1000);
+            });
+            
+            // Reiniciar sorteio
+            resetBtn.addEventListener('click', function() {
+                resultPlaceholder.style.display = 'block';
+                resultName.style.display = 'none';
+                resultPhone.style.display = 'none';
+                counter.style.display = 'none';
+                selectedContact = null;
+            });
+            
+            // Formatar número de telefone
+            function formatPhone(phone) {
+                if (!phone) return '';
+                
+                // Remover caracteres não numéricos
+                const cleaned = phone.replace(/\D/g, '');
+                
+                // Formatar como (XX) XXXXX-XXXX
+                if (cleaned.length === 11) {
+                    return `(${cleaned.substring(0, 2)}) ${cleaned.substring(2, 7)}-${cleaned.substring(7)}`;
+                } else if (cleaned.length === 10) {
+                    return `(${cleaned.substring(0, 2)}) ${cleaned.substring(2, 6)}-${cleaned.substring(6)}`;
+                } else {
+                    return cleaned;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
